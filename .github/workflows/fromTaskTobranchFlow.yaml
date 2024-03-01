@@ -1,8 +1,8 @@
-name: Create Branch and Pull Request on Issue Creations
+name: Create Branch and Pull Request on Issue Actions
 
 on:
   issues:
-    types: [opened]
+    types: [labeled]
 
 jobs:
   create-branch-and-pull-request:
@@ -14,7 +14,7 @@ jobs:
 
       - name: Extract Issue Information
         id: extract
-        run: echo "{issue_number}={${{ github.event.issue.number }}}" >> $GITHUB_ENV
+        run: echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_ENV
 
       - name: Create Branch
         run: |
@@ -24,15 +24,14 @@ jobs:
           git checkout -b "$BRANCH_NAME"
           git push origin "$BRANCH_NAME"
 
-
       - name: Create Pull Request
         uses: actions/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref }}
-          title: "Feature: Issue ${{ steps.extract.outputs.issue_number }}"
+          title: "Feature: Issue ${{ env.issue_number }}"
           body: |
-            This pull request is automatically generated for issue #${{ steps.extract.outputs.issue_number }}.
+            This pull request is automatically generated for issue #${{ env.issue_number }}.
           labels: |
             auto-generated
             enhancement
