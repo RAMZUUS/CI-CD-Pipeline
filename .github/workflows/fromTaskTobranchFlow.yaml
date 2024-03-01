@@ -20,7 +20,7 @@ jobs:
         run: |
           ISSUE_NUMBER="${{ steps.extract.outputs.issue_number }}"
           ISSUE_TITLE="${{ github.event.issue.title }}"
-          BRANCH_NAME="issue-$ISSUE_TITLE-$ISSUE_NUMBER"
+          BRANCH_NAME="issue-$ISSUE_NUMBER"
           git remote set-url origin git@github.com:RAMZUUS/CI-CD-Pipeline.git
           git checkout -b "$BRANCH_NAME"
           git push origin "$BRANCH_NAME"
