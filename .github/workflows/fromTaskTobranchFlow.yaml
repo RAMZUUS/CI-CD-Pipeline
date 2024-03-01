@@ -2,7 +2,7 @@ name: Create Branch and Pull Request on Issue Actions
 
 on:
   issues:
-    types: [labeled]
+    types: [opened]
 
 jobs:
   create-branch-and-pull-request:
