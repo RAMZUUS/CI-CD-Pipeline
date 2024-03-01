@@ -14,11 +14,11 @@ jobs:
 
       - name: Extract Issue Information
         id: extract
-        run: echo "::set-output name=issue_number::${{ github.event.issue.number }}"
+        run: echo "{issue_number}={${{ github.event.issue.number }}}" >> $GITHUB_ENV
 
       - name: Create Branch
         run: |
-          ISSUE_NUMBER="${{ steps.extract.outputs.issue_number }}"
+          ISSUE_NUMBER="${{ env.issue_number }}"
           ISSUE_TITLE="${{ github.event.issue.title }}"
           BRANCH_NAME="$ISSUE_TITLE-$ISSUE_NUMBER"
           git checkout -b "$BRANCH_NAME"
@@ -26,7 +26,7 @@ jobs:
 
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: actions/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref }}
