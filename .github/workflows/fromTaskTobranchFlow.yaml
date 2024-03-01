@@ -18,7 +18,10 @@ jobs:
           script: |
             const issueNumber = context.issue.number;
             const issueTitle = context.issue.title;
-            const branchName = `issue-${issueNumber}-${issueTitle.replace(/\s/g, '_')}`;
+            BRANCH_NAME="issue-$ISSUE_NUMBER-$ISSUE_TITLE"
+            BRANCH_NAME=$(echo $BRANCH_NAME | tr -d '[:punct:]')
+            echo "Branch Name: $BRANCH_NAME"
+            echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
             git checkout -b "$branchName";
             git push origin "$branchName";
 
