@@ -22,9 +22,7 @@ jobs:
           ISSUE_NUMBER="${{ env.issue_number }}"
           ISSUE_TITLE="${{ env.issue_title }}"
           BRANCH_NAME="$ISSUE_NUMBER-$ISSUE_TITLE"
-          BRANCH_NAME=$(echo $BRANCH_NAME | tr -d '[:punct:]')
-          echo "Branch Name: $BRANCH_NAME" 
-          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV  # Setting BRANCH_NAME as an environment variable
+
           git checkout -b $BRANCH_NAME
           git push origin $BRANCH_NAME
 
